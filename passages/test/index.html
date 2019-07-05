@@ -6,12 +6,12 @@
   <meta name="author" content="lazycat">
   
   
-  <title>java运行es6js代码 | lazycat&#39;s blog</title>
+  <title>test | lazycat&#39;s blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="坑与填坑,js,es,java,">
+    <meta name="keywords" content="Hexo, Theme-AD">
   
 
   
@@ -166,12 +166,8 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2019-06-19
+      <i class="fa fa-calendar"></i>2019-06-09
     </span>
-    
-      <span>
-        | <a href="/categories/坑与填坑/"><i class="fa fa-bookmark"></i>坑与填坑</a>
-      </span>
     
     
       <span>
@@ -180,19 +176,11 @@
     
   </div>
   <h1 class="passage-title">
-    java运行es6js代码
+    test
   </h1>
   
   <article class="passage-article">
-    <h1 id="运行es6js代码报错"><a href="#运行es6js代码报错" class="headerlink" title="运行es6js代码报错"></a>运行es6js代码报错</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 获取脚本引擎</span></span><br><span class="line">    ScriptEngineManager scriptEngineManager = <span class="keyword">new</span> ScriptEngineManager();</span><br><span class="line">    ScriptEngine nashorn = scriptEngineManager.getEngineByName(<span class="string">"nashorn"</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 读取js文件内容</span></span><br><span class="line">        nashorn.eval(<span class="keyword">new</span> FileReader(<span class="string">"D:/05.js"</span>));</span><br><span class="line">        <span class="comment">//调用js代码</span></span><br><span class="line">        Object eval = nashorn.eval(<span class="string">"GetData()"</span>);</span><br><span class="line">        System.out.println(eval);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>代码报异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expected an operand but found let</span><br></pre></td></tr></table></figure>
-
-<p>不支持let关键字</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ScriptEngine engine = <span class="keyword">new</span> NashornScriptEngineFactory().getScriptEngine(<span class="string">"--language=es6"</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 读取js文件内容</span></span><br><span class="line">    engine.eval(<span class="keyword">new</span> FileReader(<span class="string">"D:/05.js"</span>));</span><br><span class="line">    <span class="comment">//调用js代码，进行参数加密</span></span><br><span class="line">    Object eval = engine.eval(<span class="string">"GetData()"</span>);</span><br><span class="line">    System.out.println(eval);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>有let关键字的js可以正常输出，但是Nashorn只支持部分es6，还是不支持class关键字。<br>Oracle又宣布弃用Nashorn JavaScript引擎。目前看来没有好的解决方法了。</p>
+    <h1 id="测试blog"><a href="#测试blog" class="headerlink" title="测试blog"></a>测试blog</h1><p>test</p>
 
   </article>
   <aside class="table-content" id="site-toc">
@@ -201,7 +189,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#运行es6js代码报错"><span class="toc-text">运行es6js代码报错</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#测试blog"><span class="toc-text">测试blog</span></a></li></ol>
   </div>
 </aside>
   
@@ -210,7 +198,7 @@
       
         <div>
           原文链接: 
-          <a href target="_blank">http://blog.catear.net/undefined/java运行es6js代码/</a>
+          <a href target="_blank">http://blog.catear.net/passages/test/</a>
         </div>
       
       <div>
@@ -218,16 +206,6 @@
       </div>
     </aside>
   
-  
-    <div class="passage-tags">
-     
-      <a href="/tags/js/"><i class="fa fa-tags"></i>js</a>
-     
-      <a href="/tags/es/"><i class="fa fa-tags"></i>es</a>
-     
-      <a href="/tags/java/"><i class="fa fa-tags"></i>java</a>
-    
-    </div>
   
 </div>
 
@@ -347,10 +325,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/java运行es6js代码/" data-enable="true">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/undefined/test/" data-enable="true">
+    <a href="/passages/hello-world/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
