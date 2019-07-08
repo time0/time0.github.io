@@ -6,12 +6,12 @@
   <meta name="author" content="lazycat">
   
   
-  <title>springboot文件上传提示临时文件夹不存在 | lazycat&#39;s blog</title>
+  <title>PageHelp获取count过滤order by的解决办法 | lazycat&#39;s blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="坑与填坑,springboot,文件上传,临时文件,">
+    <meta name="keywords" content="坑与填坑,PageHelp,count,order by,">
   
 
   
@@ -180,22 +180,19 @@
     
   </div>
   <h1 class="passage-title">
-    springboot文件上传提示临时文件夹不存在
+    PageHelp获取count过滤order by的解决办法
   </h1>
   
   <article class="passage-article">
-    <h2 id="一-异常信息："><a href="#一-异常信息：" class="headerlink" title="一 异常信息："></a>一 异常信息：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.io.IOException: The temporary upload location [/tmp/tomcat.1747198308043109686.8887/work/Tomcat/localhost/ROOT] is not valid</span><br></pre></td></tr></table></figure>
+    <p>项目遇到遇到了分页查询问题，经过排查是pageHelp获取count自动过滤了order by导致的，随后在csdn找到了解决方法。</p>
+<p>原文地址 <a href="https://blog.csdn.net/u011704663/article/details/84581483" target="_blank" rel="noopener">https://blog.csdn.net/u011704663/article/details/84581483</a></p>
+<h1 id="bug描述："><a href="#bug描述：" class="headerlink" title="bug描述："></a>bug描述：</h1><p>用pageHelp查询出来的数据和直接执行sql里查出来的数据不一致</p>
+<h1 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h1><p>pageHelp在获取 count 的时候会默认把order by过滤掉，有可能会导致实际总数与查出来的总数不一样的情况，如下面的SQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.*</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line"><span class="keyword">SELECT</span> card , <span class="keyword">name</span> , sex , activity_level , store_name , member_id , trade_total , create_card_time</span><br><span class="line"><span class="keyword">FROM</span> report_member_advance</span><br><span class="line"><span class="keyword">WHERE</span> company_id = <span class="comment">#&#123;companyId&#125; AND store_id = #&#123;storeId&#125;</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span></span><br><span class="line">) a</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> a.member_id</span><br><span class="line"><span class="keyword">HAVING</span> <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">&lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"quantity != null and quantity == 5"</span>&gt;</span><br><span class="line">    <span class="comment">-- 大于4次</span></span><br><span class="line">    <span class="keyword">AND</span> trade_total &lt;![CDATA[ &gt; ]]&gt; <span class="number">4</span></span><br><span class="line">&lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">&lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"quantity != null and quantity == 99"</span>&gt;</span><br><span class="line">    <span class="comment">-- 消费总数</span></span><br><span class="line">    <span class="keyword">AND</span> trade_total &lt;![CDATA[&lt;&gt;]]&gt; <span class="number">0</span></span><br><span class="line">&lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">&lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"quantity != null and quantity != 99 and quantity != 5"</span>&gt;</span><br><span class="line">    <span class="comment">-- 0-4次</span></span><br><span class="line">    <span class="keyword">AND</span> trade_total = <span class="comment">#&#123;quantity&#125;</span></span><br><span class="line">&lt;/<span class="keyword">if</span>&gt;</span><br></pre></td></tr></table></figure>
 
-<h2 id="二-原因："><a href="#二-原因：" class="headerlink" title="二 原因："></a>二 原因：</h2><p>在Linux 系统中，SpringBoot 应用服务在启动（java -jar 命令启动服务）的时候，会在操作系统的/tmp目录下生成一个tomcat*的文件目录，上传的文件先要转换成临时文件保存在这个文件夹下面。由于临时/tmp目录下的文件，在长时间（10天）没有使用的情况下，就会被系统机制自动删除掉。所以如果系统长时间无人问津的话，就可能导致上面这个问题。</p>
-<h2 id="三-解决方法："><a href="#三-解决方法：" class="headerlink" title="三 解决方法："></a>三 解决方法：</h2><h3 id="1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。"><a href="#1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。" class="headerlink" title="1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。"></a>1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。</h3><h3 id="2：在配置文件中配置tomcat的临时目录，自定义baseDir。"><a href="#2：在配置文件中配置tomcat的临时目录，自定义baseDir。" class="headerlink" title="2：在配置文件中配置tomcat的临时目录，自定义baseDir。"></a>2：在配置文件中配置tomcat的临时目录，自定义baseDir。</h3><h4 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.tomcat.basedir=/tmp/tomcat</span><br></pre></td></tr></table></figure>
+<h1 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h1><p>通过跟踪源码得知，作者是做了后门的，只要在需要不过滤的 order by 前面 添加  /<em>keep orderby</em>/ 注解后，pageHelp 就会忽略不过滤 order by，亲测有效，最终 sql 为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.*</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line"><span class="keyword">SELECT</span> card , <span class="keyword">name</span> , sex , activity_level , store_name , member_id , trade_total , create_card_time</span><br><span class="line"><span class="keyword">FROM</span> report_member_advance</span><br><span class="line"><span class="keyword">WHERE</span> company_id = <span class="comment">#&#123;companyId&#125; AND store_id = #&#123;storeId&#125;</span></span><br><span class="line"><span class="comment">/*keep orderby*/</span><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">id</span> <span class="keyword">DESC</span></span><br><span class="line">) a</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> a.member_id</span><br><span class="line"><span class="keyword">HAVING</span> <span class="number">1</span> = <span class="number">1</span></span><br><span class="line">&lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"quantity != null and quantity == 5"</span>&gt;</span><br><span class="line">    <span class="comment">-- 大于4次</span></span><br><span class="line">    <span class="keyword">AND</span> trade_total &lt;![CDATA[ &gt; ]]&gt; <span class="number">4</span></span><br><span class="line">&lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">&lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"quantity != null and quantity == 99"</span>&gt;</span><br><span class="line">    <span class="comment">-- 消费总数</span></span><br><span class="line">    <span class="keyword">AND</span> trade_total &lt;![CDATA[&lt;&gt;]]&gt; <span class="number">0</span></span><br><span class="line">&lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">&lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"quantity != null and quantity != 99 and quantity != 5"</span>&gt;</span><br><span class="line">    <span class="comment">-- 0-4次</span></span><br><span class="line">    <span class="keyword">AND</span> trade_total = <span class="comment">#&#123;quantity&#125;</span></span><br><span class="line">&lt;/<span class="keyword">if</span>&gt;</span><br></pre></td></tr></table></figure>
 
-<h4 id="YAML"><a href="#YAML" class="headerlink" title="YAML"></a>YAML</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">    tomcat:</span></span><br><span class="line"><span class="attr">        basedir:</span> <span class="string">/tmp/tomcat</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。"><a href="#3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。" class="headerlink" title="3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。"></a>3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 文件上传临时路径</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line">  <span class="function">MultipartConfigElement <span class="title">multipartConfigElement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MultipartConfigFactory factory = <span class="keyword">new</span> MultipartConfigFactory();</span><br><span class="line">    factory.setLocation(<span class="string">"/tmp/tomcat"</span>);</span><br><span class="line">    <span class="keyword">return</span> factory.createMultipartConfig();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>个人建议还是用第二种,在项目启动时,生成该文件,一劳永逸,杜绝后患</p>
-<hr>
-<p>作者：陈豆粒<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/qq_28643817/article/details/86715013" target="_blank" rel="noopener">https://blog.csdn.net/qq_28643817/article/details/86715013</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
 
   </article>
   <aside class="table-content" id="site-toc">
@@ -204,7 +201,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-异常信息："><span class="toc-text">一 异常信息：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-原因："><span class="toc-text">二 原因：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-解决方法："><span class="toc-text">三 解决方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。"><span class="toc-text">1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2：在配置文件中配置tomcat的临时目录，自定义baseDir。"><span class="toc-text">2：在配置文件中配置tomcat的临时目录，自定义baseDir。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#YAML"><span class="toc-text">YAML</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。"><span class="toc-text">3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#bug描述："><span class="toc-text">bug描述：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#原因："><span class="toc-text">原因：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方法："><span class="toc-text">解决方法：</span></a></li></ol>
   </div>
 </aside>
   
@@ -213,7 +210,7 @@
       
         <div>
           原文链接: 
-          <a href target="_blank">http://blog.catear.net/passages/springboot文件上传提示临时文件夹不存在/</a>
+          <a href target="_blank">http://blog.catear.net/passages/PageHelp获取count过滤orderby的解决办法/</a>
         </div>
       
       <div>
@@ -224,11 +221,11 @@
   
     <div class="passage-tags">
      
-      <a href="/tags/springboot/"><i class="fa fa-tags"></i>springboot</a>
+      <a href="/tags/PageHelp/"><i class="fa fa-tags"></i>PageHelp</a>
      
-      <a href="/tags/文件上传/"><i class="fa fa-tags"></i>文件上传</a>
+      <a href="/tags/count/"><i class="fa fa-tags"></i>count</a>
      
-      <a href="/tags/临时文件/"><i class="fa fa-tags"></i>临时文件</a>
+      <a href="/tags/order-by/"><i class="fa fa-tags"></i>order by</a>
     
     </div>
   
@@ -350,10 +347,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/PageHelp获取count过滤orderby的解决办法/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/java运行es6js代码/" data-enable="true">
+    <a href="/passages/springboot文件上传提示临时文件夹不存在/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
