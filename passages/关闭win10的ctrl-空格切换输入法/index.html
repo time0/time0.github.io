@@ -6,7 +6,7 @@
   <meta name="author" content="lazycat">
   
   
-  <title>test | lazycat&#39;s blog</title>
+  <title>关闭win10的ctrl+空格切换输入法 | lazycat&#39;s blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -166,7 +166,7 @@
   <div class="passage">
   <div class="passage-meta">
     <span>
-      <i class="fa fa-calendar"></i>2019-06-09
+      <i class="fa fa-calendar"></i>2019-07-11
     </span>
     
     
@@ -176,11 +176,20 @@
     
   </div>
   <h1 class="passage-title">
-    test
+    关闭win10的ctrl+空格切换输入法
   </h1>
   
   <article class="passage-article">
-    <h1 id="测试blog"><a href="#测试blog" class="headerlink" title="测试blog"></a>测试blog</h1><p>test</p>
+    <p>Windows 10 亲测可用，方法是同时修改用户和默认的输入法快捷键的注册值。步骤如下：</p>
+<ol>
+<li><p>新建一个txt文件，名称命名为 坑爹bug.reg</p>
+</li>
+<li><p>复制粘贴以下内容到文件Windows Registry Editor Version 5.00</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[HKEY_CURRENT_USER\Control Panel\Input Method\Hot Keys\00000010]</span><br><span class="line">&quot;Key Modifiers&quot;=hex:00,c0,00,00</span><br><span class="line">&quot;Virtual Key&quot;=hex:ff,00,00,00</span><br><span class="line"></span><br><span class="line">[HKEY_CURRENT_USER\Control Panel\Input Method\Hot Keys\00000070]</span><br><span class="line">&quot;Key Modifiers&quot;=hex:00,c0,00,00</span><br><span class="line">&quot;Virtual Key&quot;=hex:ff,00,00,00</span><br><span class="line"></span><br><span class="line">[HKEY_USERS\.DEFAULT\Control Panel\Input Method\Hot Keys\00000010]</span><br><span class="line">&quot;Key Modifiers&quot;=hex:02,c0,00,00</span><br><span class="line">&quot;Target IME&quot;=hex:00,00,00,00</span><br><span class="line">&quot;Virtual Key&quot;=hex:ff,00,00,00</span><br><span class="line"></span><br><span class="line">[HKEY_USERS\.DEFAULT\Control Panel\Input Method\Hot Keys\00000070]</span><br><span class="line">&quot;Key Modifiers&quot;=hex:02,c0,00,00</span><br><span class="line">&quot;Target IME&quot;=hex:00,00,00,00</span><br><span class="line">&quot;Virtual Key&quot;=hex:ff,00,00,00</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>双击执行该文件4. 尝试是否生效，若不生效，则需要注销重新登录。</p>
+</li>
+</ol>
 
   </article>
   <aside class="table-content" id="site-toc">
@@ -189,7 +198,7 @@
     <span>目录</span>
   </div>
   <div class="table-content-main">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#测试blog"><span class="toc-text">测试blog</span></a></li></ol>
+    
   </div>
 </aside>
   
@@ -198,7 +207,7 @@
       
         <div>
           原文链接: 
-          <a href target="_blank">http://blog.catear.net/passages/test/</a>
+          <a href target="_blank">http://blog.catear.net/passages/关闭win10的ctrl-空格切换输入法/</a>
         </div>
       
       <div>
@@ -325,10 +334,10 @@
 
 <div class="bottom-bar">
   <div class="bottom-bar-left">
-    <a href="/passages/java运行es6js代码/" data-enable="true">
+    <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="/passages/hello-world/" data-enable="true">
+    <a href="/passages/PageHelp获取count过滤orderby的解决办法/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
