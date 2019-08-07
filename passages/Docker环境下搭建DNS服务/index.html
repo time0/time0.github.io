@@ -6,7 +6,7 @@
   <meta name="author" content="lazycat">
   
   
-  <title>归档: 2019/6 | lazycat&#39;s blog</title>
+  <title>Docker环境下搭建DNS服务 | lazycat&#39;s blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -44,7 +44,7 @@
     welcome: {"enable":true,"interval":30},
     start_time: "2019-06-09",
     passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "lazycat",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -162,19 +162,100 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">归档: 7篇</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-08-07
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Docker环境下搭建DNS服务
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2019</h3>
-    
-    <div class="timeline-item">
-      <time>2019-06-19</time>
-      <a target="_self" href="/passages/java运行es6js代码/">java运行es6js代码报错</a>
-    </div>
+  <article class="passage-article">
+    <blockquote>
+<p>原文地址 <a href="https://blog.csdn.net/qianabc2008/article/details/84560971" target="_blank" rel="noopener">https://blog.csdn.net/qianabc2008/article/details/84560971</a></p>
+</blockquote>
+<p>这里我使用<code>dnsmasq</code>对应的 docker 版本<code>jpillora/dnsmasq</code>。提供简单的 web 界面可进行 DNS 的配置管理、日志查看等操作。项目源码：<a href="https://github.com/jpillora/webproc" target="_blank" rel="noopener">https://github.com/jpillora/webproc</a></p>
+<hr>
+<h1 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h1><h2 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h2><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull jpillora/dnsmasq</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建简单的配置-opt-dnsmasq-conf"><a href="#创建简单的配置-opt-dnsmasq-conf" class="headerlink" title="创建简单的配置 /opt/dnsmasq.conf"></a>创建简单的配置 /opt/dnsmasq.conf</h2><p>此处只是创建简单的可用配置并部署，详细配置可参考：<a href="http://oss.segetech.com/intra/srv/dnsmasq.conf" target="_blank" rel="noopener">http://oss.segetech.com/intra/srv/dnsmasq.conf</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#输出查询日志信息</span><br><span class="line">log-queries</span><br><span class="line">#do not use hosts nameservers</span><br><span class="line">#默认会使用网关server,若需要配置本地局域网自动使用使用本DNS服务，则须将此选项设置为NO</span><br><span class="line">no-resolv </span><br><span class="line">#配置使用的服务，即本地查询不到时，可通过此服务依次进行查询解析，可配置多个，一般为已知的或代理的外网DNS服务</span><br><span class="line">server=114.114.114.114</span><br><span class="line">server=8.8.8.8</span><br><span class="line">#server=/syq/192.168.1.3</span><br><span class="line">#explicitly define host-ip mappings</span><br><span class="line">#定义主机与IP映射</span><br><span class="line">address=/abc.syq/192.168.1.3</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line">    --name dnsmasq \</span><br><span class="line">    -d \</span><br><span class="line">    -p 53:53/udp \</span><br><span class="line">    -p 8080:8080 \</span><br><span class="line">    -v /opt/dnsmasq.conf:/etc/dnsmasq.conf \</span><br><span class="line">    -v /etc/localtime:/etc/localtime:ro \</span><br><span class="line">    --<span class="built_in">log</span>-opt <span class="string">"max-size=100m"</span> \</span><br><span class="line">    -e <span class="string">"HTTP_USER=admin"</span> \</span><br><span class="line">    -e <span class="string">"HTTP_PASS=admin"</span> \</span><br><span class="line">    --restart always \</span><br><span class="line">    jpillora/dnsmasq</span><br></pre></td></tr></table></figure>
+
+<p><em>参数说明</em></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>max-size</td>
+<td>日志最大保存</td>
+</tr>
+<tr>
+<td>HTTP_USER</td>
+<td>登录用户名</td>
+</tr>
+<tr>
+<td>HTTP_PASS</td>
+<td>登录密码</td>
+</tr>
+</tbody></table>
+<h2 id="访问-web-UI"><a href="#访问-web-UI" class="headerlink" title="访问 web UI"></a>访问 web UI</h2><p>访问 <a href="http://dns-host:8080，使用" target="_blank" rel="noopener">http://dns-host:8080，使用</a> admin/admin 登录，进入类似如下界面，可直接修改配置，点击 save 即可快速生效。</p>
+<p><img src="https://img-blog.csdnimg.cn/20181127102647925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpYW5hYmMyMDA4,size_16,color_FFFFFF,t_70" alt></p>
+<h2 id="测试解析"><a href="#测试解析" class="headerlink" title="测试解析"></a>测试解析</h2><p><img src="https://img-blog.csdnimg.cn/20181127103354993.png" alt></p>
+<h2 id="使局域网自动生效"><a href="#使局域网自动生效" class="headerlink" title="使局域网自动生效"></a>使局域网自动生效</h2><p>配置网关的首选 DNS 为本服务，使局域网内部自动使用本 DNS 服务，无需客户端再手动设置 DNS。</p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用指南"><span class="toc-text">使用指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载镜像"><span class="toc-text">下载镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建简单的配置-opt-dnsmasq-conf"><span class="toc-text">创建简单的配置 /opt/dnsmasq.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行容器"><span class="toc-text">运行容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问-web-UI"><span class="toc-text">访问 web UI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试解析"><span class="toc-text">测试解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使局域网自动生效"><span class="toc-text">使局域网自动生效</span></a></li></ol></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: lazycat</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">http://blog.catear.net/passages/Docker环境下搭建DNS服务/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -283,16 +364,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/passages/Linux的目录结构/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
