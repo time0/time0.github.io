@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="lazycat">
+  
+  
+  <title>Docker环境下搭建Jenkins | lazycat&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Hexo, Theme-AD">
+  
+
+  
+  <meta name="description" content="lazycat的小站">
+
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js" async></script>
+  
+
+  
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+  
+
+  
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
+
+  
+    <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+
+  <script>
+  // theme-ad's config script
+  // it can be used in every script
+  
+  window.AD_CONFIG = {
+    leancloud: {"appid":"LXex4NA1Cjgx0hUXJ8u3b69m-gzGzoHsz","appkey":"5bSPpIJRAG9q4cDosd5kOG9i","comment":true,"count":true},
+    welcome: {"enable":true,"interval":30},
+    start_time: "2019-06-09",
+    passwords: ["efe07af7441da2b69c4a41e42e73be4db47f66010a56900788a458354a7373ec", ],
+    is_post: true,
+    lock: false,
+    author: "lazycat",
+    share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
+    mathjax: true,
+    page_type: "",
+    root: "/"
+  };
+</script>
+
+  <script src="/vendor/sha256.min.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/index.js"></script>
+<script src="/vendor/qrcode.min.js"></script>
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/styles/components/highlight/highlight.css">
+
+  
+</head>
+  <body>
+    <header class="site-header">
+  <div class="site-header-brand">
+    
+      <span class="site-header-brand-title">
+        <a href="/">lazycat</a>
+      </span>
+    
+    
+      <span class="site-header-brand-motto"> | 技术改变世界</span>
+    
+  </div>
+  <div class="site-header-right">
+    <nav class="site-header-navigation">
+      
+        <a href="/" target="_self">首页</a>
+      
+        <a href="/archives/" target="_self">归档</a>
+      
+        <a href="/tags/" target="_self">标签</a>
+      
+        <a href="/categories/" target="_self">分类</a>
+      
+        <a href="/friends/" target="_self">友链</a>
+      
+        <a href="/about/" target="_self">关于</a>
+      
+    </nav>
+    <div class="site-header-btn">
+      
+        <a href="https://github.com/time0/" target="_blank" id="site-github">
+          <i class="fa fa-github-alt"></i>
+        </a>
+      
+      <a href="javascript:void(0);" id="site-search">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="javascript:void(0);" id="site-nav-btn">
+        <i class="fa fa-ellipsis-v"></i>
+      </a>
+    </div>
+  </div>
+</header>
+<nav class="table-content" id="site-nav">
+  <div class="table-content-title">
+    <span>导航</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc">
+      
+        <li class="toc-item">
+          <a href="/" target="_self">
+            首页
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/archives/" target="_self">
+            归档
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/tags/" target="_self">
+            标签
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/categories/" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/friends/" target="_self">
+            友链
+          </a>
+        </li>
+      
+        <li class="toc-item">
+          <a href="/about/" target="_self">
+            关于
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</nav>
+<div id="site-process"></div>
+    <main>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-08-07
+    </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    Docker环境下搭建Jenkins
+  </h1>
+  
+  <article class="passage-article">
+    <blockquote>
+<p>原文地址 <a href="https://www.jianshu.com/p/0391e225e4a6" target="_blank" rel="noopener">https://www.jianshu.com/p/0391e225e4a6</a></p>
+</blockquote>
+<h3 id="一-什么是-Jenkins"><a href="#一-什么是-Jenkins" class="headerlink" title="一. 什么是 Jenkins"></a>一. 什么是 Jenkins</h3><p>Jenkins 是当前非常流行的一款持续集成工具，可以帮助大家把更新后的代码自动部署到服务器上运行。</p>
+<h3 id="二-为什么用-docker-版的-Jenkins"><a href="#二-为什么用-docker-版的-Jenkins" class="headerlink" title="二. 为什么用 docker 版的 Jenkins"></a>二. 为什么用 docker 版的 Jenkins</h3><p>Jenkins 主要有三种安装方式</p>
+<ol>
+<li>下载官方 war 包，放到 tomcat 中直接运行。</li>
+<li>yum 安装，感兴趣的朋友可以参考之前我写的一篇文章<a href="https://www.jianshu.com/p/c517f09df025" target="_blank" rel="noopener">在 linux 服务器上安装 Jenkins</a>。</li>
+<li>使用官方 docker 镜像。</li>
+</ol>
+<p>本人之前也是使用 yum 安装的方式安装<code>Jenkins的</code>，不过自动用上<code>docker</code>后，就再也没那样安装过。不得不说直接使用<code>docker</code>镜像真是简单除暴无脑。</p>
+<h3 id="三-准备工作"><a href="#三-准备工作" class="headerlink" title="三. 准备工作"></a>三. 准备工作</h3><p>要使用 docker 镜像，首先你得先安装 docker。对 docker 不熟悉的朋友可以参考我之前写的一篇 <a href="https://www.jianshu.com/p/d95c52d5ec3f" target="_blank" rel="noopener">docker 安装和简单使用</a>的教程。</p>
+<h3 id="四-寻找官方镜像"><a href="#四-寻找官方镜像" class="headerlink" title="四. 寻找官方镜像"></a>四. 寻找官方镜像</h3><p>我们可以到 <a href="https://jenkins.io/download/" target="_blank" rel="noopener">Jenkins 官网</a>上寻找 docker 镜像地址。  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-400da32a91e389ea.png" alt> Jenkins 官网</p>
+<p>点击 docker 按钮，自动跳转到 dockerhub，在这里可以找到下载命令</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-ecec0ece94503c57.png" alt> Docker Hub 网站</p>
+<h3 id="五-启动-Jenkins"><a href="#五-启动-Jenkins" class="headerlink" title="五. 启动 Jenkins"></a>五. 启动 Jenkins</h3><p>找到了官方镜像后，我们就可以开始安装了。进入安装好了 docker 的 linux 服务器，这里我们以<a href="https://www.jianshu.com/p/d95c52d5ec3f" target="_blank" rel="noopener">之前教程</a>介绍的阿里云 centos7.3 环境为例。</p>
+<p>输入命令，下载<code>Jenkins</code>官方镜像到服务器上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull jenkins/jenkins</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-17b53e7ce76c8dd3.png" alt> 下载镜像</p>
+<p>耐心等待下载完成，输入命令查看下载完成的镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-61fc8a41c35e1d03.png" alt> 镜像下载完成</p>
+<p>镜像下载完成，下面就要开始启动容器了。启动容器前，建议大家仔细阅读前面寻找镜像时 <a href="https://hub.docker.com/_/jenkins/" target="_blank" rel="noopener">Docker Hub 上关于 jenkins 镜像的详细说明</a>。</p>
+<p>在镜像文档里，我们知道<code>Jenkins</code>访问的端口号是<code>8080</code>，另外还需要暴露一个<code>tcp</code>的端口号<code>50000</code>。我们使用如下命令启动<code>Jenkins</code>镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:8080 -p 50000:50000 -v jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins docker.io/jenkins/jenkins</span><br></pre></td></tr></table></figure>
+
+<p>这里逐条解释下各参数的意义。</p>
+<ul>
+<li><code>-d</code> 后台运行镜像</li>
+<li><code>-p 80:8080</code> 将镜像的 8080 端口映射到服务器的 80 端口</li>
+<li><code>-p 50000:50000</code> 将镜像的 50000 端口映射到服务器的 50000 端口</li>
+<li><code>-v jenkins:/var/jenkins_home</code> <code>/var/jenkins_home</code>目录为 jenkins 工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。</li>
+<li><code>-v /etc/localtime:/etc/localtime</code> 让容器使用和服务器同样的时间设置。</li>
+<li><code>--name jenkins</code> 给容器起一个别名</li>
+</ul>
+<p>启动后输入命令<code>docker ps -a</code>查看所有容器，可以看到<code>jenkins</code>已成功启动。  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-75bf205f6f84a350.png" alt> 启动成功</p>
+<h3 id="六-配置-Jenkins"><a href="#六-配置-Jenkins" class="headerlink" title="六. 配置 Jenkins"></a>六. 配置 Jenkins</h3><p>在浏览器输入<code>http://ip</code>进入 Jenkins 登录页面。页面会提示你到服务器的指定位置获取初始化密码。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f45436a8b038b0cf.png" alt> 输入启动密码</p>
+<p>注意，因为我们是<code>docker</code>版的<code>jenkins</code>，所以这个路径不是服务器的路径，而是容器内的路径。我们可以通过如下命令从容器中获取到初始化密码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec jenkins tail /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-350c6e359aef0ee5.png" alt> image.png</p>
+<p>在页面输入密码，点击<code>Continue</code>，进入插件安装页面。我们点击左边的<code>Install suggested plugins</code>，安装推荐插件就好。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-0b8545b3697b9c1a.png" alt> image.png</p>
+<p>耐心等待安装完成</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f3828123fe5b7536.png" alt> image.png</p>
+<p>安装好插件后，系统会提示建立管理员账户。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-1893b83894e8b9ec.png" alt> image.png</p>
+<p>创建管理员账户后进入系统，我们先来配置常用工具。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-effde9a62339b43a.png" alt> 工具配置</p>
+<p>进入工具配置页，首先看到的就是 jdk 配置，这里我们先使用自动安装的<code>java8</code>。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-055bb606220cfaf6.png" alt> jdk 自动安装</p>
+<p>注意，自动安装<code>jdk</code>需要你填入<code>oracle</code>的账号密码，这样<code>Jenkins</code>才能自动帮你到<code>oracle</code>安装。如果没有<code>oracle</code>账号，建议先去 <a href="https://www.oracle.com/" target="_blank" rel="noopener">Oracle 官网</a>注册一下。</p>
+<p>配置好<code>jdk</code>自动安装后，我们继续配置<code>git</code>。<code>git</code>的字段安装更简单，起个别名，勾上<code>自动安装</code>。  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f4c50a1c1517d06d.png" alt> git 自动安装</p>
+<p>配置好 git 我们继续配置<code>Gradle</code>，一样简单，起个别名，勾上<code>自动安装</code>，选择<code>Gradle</code>的版本。  </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-357c51198e17e4bb.png" alt> gradle 自动安装</p>
+<p>至此，jenkins 就安装配置完成了。关于具体如何使用 jenkins 进行自动发布，可以参考本人另一篇文章 <a href="https://www.jianshu.com/p/eb3cbb34be97" target="_blank" rel="noopener">linux 服务器中 Jenkins 集成 git、Gradle 持续构建 Springboot 项目</a>。</p>
+<h3 id="七-生成-SSHKey"><a href="#七-生成-SSHKey" class="headerlink" title="七. 生成 SSHKey"></a>七. 生成 SSHKey</h3><p>这里再补充一章说明如何生成 SSHKey。容器从 github 上面下载代码的时候需要用到。因为咱们这个 Jenkins 是基于 docker 的，不是直接安装在服务器上，这里有很大的不同。</p>
+<p>要生成容器的 SSHKey，首先要先进入容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it jenkins /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>进入容器后生成 sshkey</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;123@qq.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-e8bb06e4caa042ad.png" alt> 生成 sshkey</p>
+<p>在容器内输入<code>exit</code>离开容器，使用如下命令获取公钥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail /var/lib/docker/volumes/jenkins/_data/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-ce7e9ffa81988321.png" alt> 获取 SSHKey 公钥</p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-什么是-Jenkins"><span class="toc-text">一. 什么是 Jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-为什么用-docker-版的-Jenkins"><span class="toc-text">二. 为什么用 docker 版的 Jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-准备工作"><span class="toc-text">三. 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-寻找官方镜像"><span class="toc-text">四. 寻找官方镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-启动-Jenkins"><span class="toc-text">五. 启动 Jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-配置-Jenkins"><span class="toc-text">六. 配置 Jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七-生成-SSHKey"><span class="toc-text">七. 生成 SSHKey</span></a></li></ol>
+  </div>
+</aside>
+  
+    <aside class="passage-copyright">
+      <div>本文作者: lazycat</div>
+      
+        <div>
+          原文链接: 
+          <a href target="_blank">http://blog.catear.net/passages/Docker环境下搭建Jenkins/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+</div>
+
+    </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
+    
+    <div class="site-footer-wrapper">
+  <footer class="site-footer">
+    
+      
+        <div class="site-footer-col">
+          <h5 class="site-footer-title">博客推荐</h5>
+          
+            <span class="site-footer-item">
+              <a href="https://godbmw.com/" target="_blank">GodBMW</a>
+            </span>
+          
+            <span class="site-footer-item">
+              <a href="http://ruanyifeng.com/" target="_blank">阮一峰的个人网站</a>
+            </span>
+          
+        </div>
+      
+        <div class="site-footer-col">
+          <h5 class="site-footer-title">系列教程</h5>
+          
+            <span class="site-footer-item">
+              <a href="https://godbmw.com/categories/webpack4%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/" target="_blank">webpack4系列教程</a>
+            </span>
+          
+            <span class="site-footer-item">
+              <a href="https://godbmw.com/design-patterns/" target="_blank">设计模式手册</a>
+            </span>
+          
+        </div>
+      
+        <div class="site-footer-col">
+          <h5 class="site-footer-title">抓到我</h5>
+          
+            <span class="site-footer-item">
+              <a href="https://juejin.im/user/5b91fcf06fb9a05d3c7fd4a5" target="_blank">掘金</a>
+            </span>
+          
+            <span class="site-footer-item">
+              <a href="https://segmentfault.com/" target="_blank">思否</a>
+            </span>
+          
+        </div>
+      
+    
+    <div class="site-footer-info">
+      <i class="fa fa-clock-o"></i> 本站已稳定如狗运行<span id="site-time"></span>
+    </div>
+    
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
+    
+      <div class="site-footer-info">
+        <i class="fa fa-at"></i> Email: admin@catear.net
+      </div>
+    
+    <div class="site-footer-info">
+      <i class="fa fa-copyright"></i>
+      2019 lazycat|theme <a href="https://github.com/dongyuanxin/theme-ad/" target="_blank">Theme-AD</a>
+    </div>
+  </footer>
+</div>
+    <div id="site-layer" style="display:none;">
+  <div class="site-layer-content">
+    <div class="site-layer-header">
+      <span class="site-layer-header-title" id="site-layer-title"></span>
+      <i class="fa fa-close" id="site-layer-close"></i>
+    </div>
+    <div class="site-layer-body" id="site-layer-container">
+      <div class="site-layer-input" id="site-layer-search" style="display: none;">
+        <div class="site-layer-input-choose">
+          <a href="javascript:void(0);" title="Change Search Engine">Google</a>
+        </div>
+        <input type="text">
+        <i class="fa fa-search"></i>
+      </div>
+      
+        <div class="site-layer-reward" id="site-layer-reward" style="display: none;">
+          
+            <div>
+              <img src="/images/wecha.png" alt="WeChat">
+              
+                <p>WeChat</p>
+              
+            </div>
+          
+            <div>
+              <img src="/images/alipa.png" alt="AliPay">
+              
+                <p>AliPay</p>
+              
+            </div>
+          
+        </div>
+      
+      <div id="site-layer-welcome" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+    
+
+<div class="bottom-bar">
+  <div class="bottom-bar-left">
+    <a href="javascript:void(0);" data-enable="false">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="/passages/Docker容器添加开机启动/" data-enable="true">
+      <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="bottom-bar-right">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+      <a href="#site-comment" data-enable="true">
+        <i class="fa fa-commenting"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="site-toggle-share-btn">
+      <i class="fa fa-share-alt"></i>
+    </a>
+    
+      <a href="javascript:void(0);" id="site-reward">
+        <i class="fa fa-thumbs-up"></i>
+      </a>
+    
+    <a href="javascript:void(0);" id="back-top-btn">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+</div>
+    <div id="share-btn">
+  
+    <a id="share-btn-twitter" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-twitter"></i>
+    </a>
+  
+  
+    <a id="share-btn-facebook" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-facebook"></i>
+    </a>
+  
+  
+    <a id="share-btn-weibo" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-weibo"></i>
+    </a>
+  
+  
+    <a id="share-btn-qq" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-qq"></i>
+    </a>
+  
+  
+    <a id="share-btn-wechat" href="javascript:void(0);" target="_blank">
+      <i class="fa fa-wechat"></i>
+    </a>
+  
+</div>
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script async>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '');
+  </script>
+
+
+
+  <script async>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+
+
+
+  <script async>
+    (function(){
+    var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?":"https://jspassport.ssl.qhimg.com/11.0.1.js?";
+    document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+  </script>
+
+
+    
+  </body>
+</html>
