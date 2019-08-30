@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>通过IDEA去Debug远程Jar包</title>
+      <link href="undefinedpassages/%E9%80%9A%E8%BF%87IDEA%E5%8E%BBDebug%E8%BF%9C%E7%A8%8BJar%E5%8C%85/"/>
+      <url>passages/%E9%80%9A%E8%BF%87IDEA%E5%8E%BBDebug%E8%BF%9C%E7%A8%8BJar%E5%8C%85/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>原文地址 <a href="https://blog.csdn.net/rainbow702/article/details/64127489" target="_blank" rel="noopener">https://blog.csdn.net/rainbow702/article/details/64127489</a></p></blockquote><p>代码打成 Jar 之后，要如何进行 Debug 呢？<br>下面以 IDEA 来例进行说明：</p><blockquote><p>首先，以以下方式来启动 Jar 包</p></blockquote><pre><code>java -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y -jar test.jar</code></pre><p>启动之后，你会发现，有如下提示：</p><pre><code>Listening for transport dt_socket at address: 5005</code></pre><p>这个时候，就卡在这不动了，然后我们进行下面这步：</p><blockquote><p>配置 IDEA，按如下配置</p></blockquote><p><img src="https://img-blog.csdn.net/20170320160657670?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmFpbmJvdzcwMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p><blockquote><p>启动 Debug</p></blockquote><p><img src="https://img-blog.csdn.net/20170320160758665?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmFpbmJvdzcwMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p><p>这个时候，只要你打了断点了，应该会发现可以进行正常 debug 了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker环境下搭建Jenkins</title>
+      <link href="undefinedpassages/Docker%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%90%AD%E5%BB%BAJenkins/"/>
+      <url>passages/Docker%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%90%AD%E5%BB%BAJenkins/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>原文地址 <a href="https://www.jianshu.com/p/0391e225e4a6" target="_blank" rel="noopener">https://www.jianshu.com/p/0391e225e4a6</a></p></blockquote><h3 id="一-什么是-Jenkins"><a href="#一-什么是-Jenkins" class="headerlink" title="一. 什么是 Jenkins"></a>一. 什么是 Jenkins</h3><p>Jenkins 是当前非常流行的一款持续集成工具，可以帮助大家把更新后的代码自动部署到服务器上运行。</p><h3 id="二-为什么用-docker-版的-Jenkins"><a href="#二-为什么用-docker-版的-Jenkins" class="headerlink" title="二. 为什么用 docker 版的 Jenkins"></a>二. 为什么用 docker 版的 Jenkins</h3><p>Jenkins 主要有三种安装方式</p><ol><li>下载官方 war 包，放到 tomcat 中直接运行。</li><li>yum 安装，感兴趣的朋友可以参考之前我写的一篇文章<a href="https://www.jianshu.com/p/c517f09df025" target="_blank" rel="noopener">在 linux 服务器上安装 Jenkins</a>。</li><li>使用官方 docker 镜像。</li></ol><p>本人之前也是使用 yum 安装的方式安装<code>Jenkins的</code>，不过自动用上<code>docker</code>后，就再也没那样安装过。不得不说直接使用<code>docker</code>镜像真是简单除暴无脑。</p><h3 id="三-准备工作"><a href="#三-准备工作" class="headerlink" title="三. 准备工作"></a>三. 准备工作</h3><p>要使用 docker 镜像，首先你得先安装 docker。对 docker 不熟悉的朋友可以参考我之前写的一篇 <a href="https://www.jianshu.com/p/d95c52d5ec3f" target="_blank" rel="noopener">docker 安装和简单使用</a>的教程。</p><h3 id="四-寻找官方镜像"><a href="#四-寻找官方镜像" class="headerlink" title="四. 寻找官方镜像"></a>四. 寻找官方镜像</h3><p>我们可以到 <a href="https://jenkins.io/download/" target="_blank" rel="noopener">Jenkins 官网</a>上寻找 docker 镜像地址。  </p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-400da32a91e389ea.png" alt> Jenkins 官网</p><p>点击 docker 按钮，自动跳转到 dockerhub，在这里可以找到下载命令</p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-ecec0ece94503c57.png" alt> Docker Hub 网站</p><h3 id="五-启动-Jenkins"><a href="#五-启动-Jenkins" class="headerlink" title="五. 启动 Jenkins"></a>五. 启动 Jenkins</h3><p>找到了官方镜像后，我们就可以开始安装了。进入安装好了 docker 的 linux 服务器，这里我们以<a href="https://www.jianshu.com/p/d95c52d5ec3f" target="_blank" rel="noopener">之前教程</a>介绍的阿里云 centos7.3 环境为例。</p><p>输入命令，下载<code>Jenkins</code>官方镜像到服务器上。</p><pre><code>docker pull jenkins/jenkins</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-17b53e7ce76c8dd3.png" alt> 下载镜像</p><p>耐心等待下载完成，输入命令查看下载完成的镜像</p><pre><code>docker images</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-61fc8a41c35e1d03.png" alt> 镜像下载完成</p><p>镜像下载完成，下面就要开始启动容器了。启动容器前，建议大家仔细阅读前面寻找镜像时 <a href="https://hub.docker.com/_/jenkins/" target="_blank" rel="noopener">Docker Hub 上关于 jenkins 镜像的详细说明</a>。</p><p>在镜像文档里，我们知道<code>Jenkins</code>访问的端口号是<code>8080</code>，另外还需要暴露一个<code>tcp</code>的端口号<code>50000</code>。我们使用如下命令启动<code>Jenkins</code>镜像。</p><pre><code>docker run -d -p 80:8080 -p 50000:50000 -v jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins docker.io/jenkins/jenkins</code></pre><p>这里逐条解释下各参数的意义。</p><ul><li><code>-d</code> 后台运行镜像</li><li><code>-p 80:8080</code> 将镜像的 8080 端口映射到服务器的 80 端口</li><li><code>-p 50000:50000</code> 将镜像的 50000 端口映射到服务器的 50000 端口</li><li><code>-v jenkins:/var/jenkins_home</code> <code>/var/jenkins_home</code>目录为 jenkins 工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。</li><li><code>-v /etc/localtime:/etc/localtime</code> 让容器使用和服务器同样的时间设置。</li><li><code>--name jenkins</code> 给容器起一个别名</li></ul><p>启动后输入命令<code>docker ps -a</code>查看所有容器，可以看到<code>jenkins</code>已成功启动。  </p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-75bf205f6f84a350.png" alt> 启动成功</p><h3 id="六-配置-Jenkins"><a href="#六-配置-Jenkins" class="headerlink" title="六. 配置 Jenkins"></a>六. 配置 Jenkins</h3><p>在浏览器输入<code>http://ip</code>进入 Jenkins 登录页面。页面会提示你到服务器的指定位置获取初始化密码。</p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-f45436a8b038b0cf.png" alt> 输入启动密码</p><p>注意，因为我们是<code>docker</code>版的<code>jenkins</code>，所以这个路径不是服务器的路径，而是容器内的路径。我们可以通过如下命令从容器中获取到初始化密码。</p><pre><code>docker exec jenkins tail /var/jenkins_home/secrets/initialAdminPassword</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-350c6e359aef0ee5.png" alt> image.png</p><p>在页面输入密码，点击<code>Continue</code>，进入插件安装页面。我们点击左边的<code>Install suggested plugins</code>，安装推荐插件就好。</p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-0b8545b3697b9c1a.png" alt> image.png</p><p>耐心等待安装完成</p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-f3828123fe5b7536.png" alt> image.png</p><p>安装好插件后，系统会提示建立管理员账户。</p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-1893b83894e8b9ec.png" alt> image.png</p><p>创建管理员账户后进入系统，我们先来配置常用工具。</p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-effde9a62339b43a.png" alt> 工具配置</p><p>进入工具配置页，首先看到的就是 jdk 配置，这里我们先使用自动安装的<code>java8</code>。</p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-055bb606220cfaf6.png" alt> jdk 自动安装</p><p>注意，自动安装<code>jdk</code>需要你填入<code>oracle</code>的账号密码，这样<code>Jenkins</code>才能自动帮你到<code>oracle</code>安装。如果没有<code>oracle</code>账号，建议先去 <a href="https://www.oracle.com/" target="_blank" rel="noopener">Oracle 官网</a>注册一下。</p><p>配置好<code>jdk</code>自动安装后，我们继续配置<code>git</code>。<code>git</code>的字段安装更简单，起个别名，勾上<code>自动安装</code>。  </p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-f4c50a1c1517d06d.png" alt> git 自动安装</p><p>配置好 git 我们继续配置<code>Gradle</code>，一样简单，起个别名，勾上<code>自动安装</code>，选择<code>Gradle</code>的版本。  </p><p><img src="http://upload-images.jianshu.io/upload_images/4399845-357c51198e17e4bb.png" alt> gradle 自动安装</p><p>至此，jenkins 就安装配置完成了。关于具体如何使用 jenkins 进行自动发布，可以参考本人另一篇文章 <a href="https://www.jianshu.com/p/eb3cbb34be97" target="_blank" rel="noopener">linux 服务器中 Jenkins 集成 git、Gradle 持续构建 Springboot 项目</a>。</p><h3 id="七-生成-SSHKey"><a href="#七-生成-SSHKey" class="headerlink" title="七. 生成 SSHKey"></a>七. 生成 SSHKey</h3><p>这里再补充一章说明如何生成 SSHKey。容器从 github 上面下载代码的时候需要用到。因为咱们这个 Jenkins 是基于 docker 的，不是直接安装在服务器上，这里有很大的不同。</p><p>要生成容器的 SSHKey，首先要先进入容器</p><pre><code>docker exec -it jenkins /bin/bash</code></pre><p>进入容器后生成 sshkey</p><pre><code>ssh-keygen -t rsa -C &quot;123@qq.com&quot;</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-e8bb06e4caa042ad.png" alt> 生成 sshkey</p><p>在容器内输入<code>exit</code>离开容器，使用如下命令获取公钥</p><pre><code>tail /var/lib/docker/volumes/jenkins/_data/.ssh/id_rsa.pub</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-ce7e9ffa81988321.png" alt> 获取 SSHKey 公钥</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 文档 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker容器添加开机启动</title>
+      <link href="undefinedpassages/Docker%E5%AE%B9%E5%99%A8%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/"/>
+      <url>passages/Docker%E5%AE%B9%E5%99%A8%E6%B7%BB%E5%8A%A0%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="添加容器在-docker-运行时自动启有两种方法"><a href="#添加容器在-docker-运行时自动启有两种方法" class="headerlink" title="添加容器在 docker 运行时自动启有两种方法"></a>添加容器在 docker 运行时自动启有两种方法</h1><ol><li>在使用 docker run 时，添加下面参数</li></ol><pre><code>--restart=always </code></pre><ol start="2"><li>在运行 docker 的时候添加</li></ol><pre><code>docker update --restart=always 07fb7442f813</code></pre><p>其中 07fb7442f813 是容器 ID</p><ol><li>在使用docker run启动容器时，使用–restart参数来设置：</li></ol><p>–restart具体参数值详细信息：</p><p>​       no -  容器退出时，不重启容器；</p><p>​       on-failure - 只有在非0状态退出时才从新启动容器；</p><p>​       always - 无论退出状态是如何，都重启容器；</p><pre><code>docker run --restart=always xxx</code></pre><p>还可以在使用on - failure策略时，指定Docker将尝试重新启动容器的最大次数。默认情况下，Docker将尝试永远重新启动容器。</p><pre><code>docker run --restart=on-failure:10 redis</code></pre><ol start="2"><li>如果创建时未指定 –restart=always ,可通过update 命令</li></ol><pre><code>docker update --restart=always xxxxxxxx</code></pre><p>其中 xxxxxxxx 是容器 ID</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 文档 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker环境下搭建DNS服务</title>
+      <link href="undefinedpassages/Docker%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%90%AD%E5%BB%BADNS%E6%9C%8D%E5%8A%A1/"/>
+      <url>passages/Docker%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%90%AD%E5%BB%BADNS%E6%9C%8D%E5%8A%A1/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>原文地址 <a href="https://blog.csdn.net/qianabc2008/article/details/84560971" target="_blank" rel="noopener">https://blog.csdn.net/qianabc2008/article/details/84560971</a></p></blockquote><p>这里我使用<code>dnsmasq</code>对应的 docker 版本<code>jpillora/dnsmasq</code>。提供简单的 web 界面可进行 DNS 的配置管理、日志查看等操作。项目源码：<a href="https://github.com/jpillora/webproc" target="_blank" rel="noopener">https://github.com/jpillora/webproc</a></p><hr><h1 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h1><h2 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h2><pre><code class="docker">docker pull jpillora/dnsmasq</code></pre><h2 id="创建简单的配置-opt-dnsmasq-conf"><a href="#创建简单的配置-opt-dnsmasq-conf" class="headerlink" title="创建简单的配置 /opt/dnsmasq.conf"></a>创建简单的配置 /opt/dnsmasq.conf</h2><p>此处只是创建简单的可用配置并部署，详细配置可参考：<a href="http://oss.segetech.com/intra/srv/dnsmasq.conf" target="_blank" rel="noopener">http://oss.segetech.com/intra/srv/dnsmasq.conf</a></p><pre><code>#输出查询日志信息log-queries#do not use hosts nameservers#默认会使用网关server,若需要配置本地局域网自动使用使用本DNS服务，则须将此选项设置为NOno-resolv #配置使用的服务，即本地查询不到时，可通过此服务依次进行查询解析，可配置多个，一般为已知的或代理的外网DNS服务server=114.114.114.114server=8.8.8.8#server=/syq/192.168.1.3#explicitly define host-ip mappings#定义主机与IP映射address=/abc.syq/192.168.1.3</code></pre><h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><pre><code class="bash">docker run \    --name dnsmasq \    -d \    -p 53:53/udp \    -p 8080:8080 \    -v /opt/dnsmasq.conf:/etc/dnsmasq.conf \    -v /etc/localtime:/etc/localtime:ro \    --log-opt &quot;max-size=100m&quot; \    -e &quot;HTTP_USER=admin&quot; \    -e &quot;HTTP_PASS=admin&quot; \    --restart always \    jpillora/dnsmasq</code></pre><p><em>参数说明</em></p><table><thead><tr><th>名称</th><th>说明</th></tr></thead><tbody><tr><td>max-size</td><td>日志最大保存</td></tr><tr><td>HTTP_USER</td><td>登录用户名</td></tr><tr><td>HTTP_PASS</td><td>登录密码</td></tr></tbody></table><h2 id="访问-web-UI"><a href="#访问-web-UI" class="headerlink" title="访问 web UI"></a>访问 web UI</h2><p>访问 <a href="http://dns-host:8080，使用" target="_blank" rel="noopener">http://dns-host:8080，使用</a> admin/admin 登录，进入类似如下界面，可直接修改配置，点击 save 即可快速生效。</p><p><img src="https://img-blog.csdnimg.cn/20181127102647925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpYW5hYmMyMDA4,size_16,color_FFFFFF,t_70" alt></p><h2 id="测试解析"><a href="#测试解析" class="headerlink" title="测试解析"></a>测试解析</h2><p><img src="https://img-blog.csdnimg.cn/20181127103354993.png" alt></p><h2 id="使局域网自动生效"><a href="#使局域网自动生效" class="headerlink" title="使局域网自动生效"></a>使局域网自动生效</h2><p>配置网关的首选 DNS 为本服务，使局域网内部自动使用本 DNS 服务，无需客户端再手动设置 DNS。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 文档 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Linux的目录结构</title>
+      <link href="undefinedpassages/Linux%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/"/>
+      <url>passages/Linux%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Linux-的目录结构"><a href="#Linux-的目录结构" class="headerlink" title="Linux 的目录结构"></a>Linux 的目录结构</h1><table><thead><tr><th>目录</th><th>说明</th></tr></thead><tbody><tr><td>bin</td><td>存放二进制可执行文件 (ls,cat,mkdir 等)</td></tr><tr><td>boot</td><td>存放用于系统引导时使用的各种文件</td></tr><tr><td>dev</td><td>用于存放设备文件</td></tr><tr><td>etc</td><td>存放系统配置文件</td></tr><tr><td>home</td><td>存放所有用户文件的根目录</td></tr><tr><td>lib</td><td>存放跟文件系统中的程序运行所需要的共享库及内核模块</td></tr><tr><td>mnt</td><td>系统管理员安装临时文件系统的安装点</td></tr><tr><td>opt</td><td>额外安装的可选应用程序包所放置的位置</td></tr><tr><td>proc</td><td>虚拟文件系统，存放当前内存的映射</td></tr><tr><td>root</td><td>超级用户目录</td></tr><tr><td>sbin</td><td>存放二进制可执行文件，只有 root 才能访问</td></tr><tr><td>tmp</td><td>用于存放各种临时文件</td></tr><tr><td>usr</td><td>用于存放系统应用程序，比较重要的目录 / usr/local 本地管理员软件安装目录</td></tr><tr><td>var</td><td>用于存放运行时需要改变数据的文件</td></tr></tbody></table>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>windows10 1903中vmware无法运行解决方法</title>
+      <link href="undefinedpassages/windows10vmware%E6%97%A0%E6%B3%95%E8%BF%90%E8%A1%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+      <url>passages/windows10vmware%E6%97%A0%E6%B3%95%E8%BF%90%E8%A1%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h2 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h2><ol><li>升级vmware到15.0.4版本</li><li>停止hv主机服务<br>bcdedit /set hypervisorlaunchtype off<br>重启</li><li>勾选虚拟打印机选项<br><img src="https://raw.githubusercontent.com/time0/Image-Hosting/master/20190727232915.png" alt></li></ol><p>转载：    <a href="https://blog.csdn.net/huoyan98/article/details/89882931" target="_blank" rel="noopener">https://blog.csdn.net/huoyan98/article/details/89882931</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 坑与填坑 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>关闭win10的ctrl+空格切换输入法</title>
+      <link href="undefinedpassages/%E5%85%B3%E9%97%ADwin10%E7%9A%84ctrl-%E7%A9%BA%E6%A0%BC%E5%88%87%E6%8D%A2%E8%BE%93%E5%85%A5%E6%B3%95/"/>
+      <url>passages/%E5%85%B3%E9%97%ADwin10%E7%9A%84ctrl-%E7%A9%BA%E6%A0%BC%E5%88%87%E6%8D%A2%E8%BE%93%E5%85%A5%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>Windows 10 亲测可用，方法是同时修改用户和默认的输入法快捷键的注册值。步骤如下：</p><ol><li><p>新建一个txt文件，名称命名为 坑爹bug.reg</p></li><li><p>复制粘贴以下内容到文件Windows Registry Editor Version 5.00</p><pre><code>[HKEY_CURRENT_USER\Control Panel\Input Method\Hot Keys\00000010]&quot;Key Modifiers&quot;=hex:00,c0,00,00&quot;Virtual Key&quot;=hex:ff,00,00,00</code></pre></li></ol><p>[HKEY_CURRENT_USER\Control Panel\Input Method\Hot Keys\00000070]<br>“Key Modifiers”=hex:00,c0,00,00<br>“Virtual Key”=hex:ff,00,00,00</p><p>[HKEY_USERS.DEFAULT\Control Panel\Input Method\Hot Keys\00000010]<br>“Key Modifiers”=hex:02,c0,00,00<br>“Target IME”=hex:00,00,00,00<br>“Virtual Key”=hex:ff,00,00,00</p><p>[HKEY_USERS.DEFAULT\Control Panel\Input Method\Hot Keys\00000070]<br>“Key Modifiers”=hex:02,c0,00,00<br>“Target IME”=hex:00,00,00,00<br>“Virtual Key”=hex:ff,00,00,00<br>```</p><ol start="3"><li>双击执行该文件4. 尝试是否生效，若不生效，则需要注销重新登录。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 坑与填坑 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>PageHelp获取count过滤order by的解决办法</title>
+      <link href="undefinedpassages/PageHelp%E8%8E%B7%E5%8F%96count%E8%BF%87%E6%BB%A4orderby%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+      <url>passages/PageHelp%E8%8E%B7%E5%8F%96count%E8%BF%87%E6%BB%A4orderby%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>项目遇到遇到了分页查询问题，经过排查是pageHelp获取count自动过滤了order by导致的，随后在csdn找到了解决方法。</p><p>原文地址 <a href="https://blog.csdn.net/u011704663/article/details/84581483" target="_blank" rel="noopener">https://blog.csdn.net/u011704663/article/details/84581483</a></p><p>下面是自己整理过后的</p><h1 id="bug描述："><a href="#bug描述：" class="headerlink" title="bug描述："></a>bug描述：</h1><p>用pageHelp查询出来的数据和直接执行sql里查出来的数据不一致</p><h1 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h1><p>pageHelp在获取 count 的时候会默认把order by过滤掉，有可能会导致实际总数与查出来的总数不一样的情况，如下面的SQL：</p><pre><code class="sql">SELECT a.*FROM (SELECT card , name , sex , activity_level , store_name , member_id , trade_total , create_card_timeFROM report_member_advanceWHERE company_id = #{companyId} AND store_id = #{storeId}ORDER BY id DESC) aGROUP BY a.member_idHAVING 1 = 1&lt;if test=&quot;quantity != null and quantity == 5&quot;&gt;    -- 大于4次    AND trade_total &lt;![CDATA[ &gt; ]]&gt; 4&lt;/if&gt;&lt;if test=&quot;quantity != null and quantity == 99&quot;&gt;    -- 消费总数    AND trade_total &lt;![CDATA[&lt;&gt;]]&gt; 0&lt;/if&gt;&lt;if test=&quot;quantity != null and quantity != 99 and quantity != 5&quot;&gt;    -- 0-4次    AND trade_total = #{quantity}&lt;/if&gt;</code></pre><h1 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h1><p>通过跟踪源码得知，作者是做了后门的，只要在需要不过滤的 order by 前面 添加  /<em>keep orderby</em>/ 注解后，pageHelp 就会忽略不过滤 order by，亲测有效，最终 sql 为：</p><pre><code class="sql">SELECT a.*FROM (SELECT card , name , sex , activity_level , store_name , member_id , trade_total , create_card_timeFROM report_member_advanceWHERE company_id = #{companyId} AND store_id = #{storeId}/*keep orderby*/ORDER BY id DESC) aGROUP BY a.member_idHAVING 1 = 1&lt;if test=&quot;quantity != null and quantity == 5&quot;&gt;    -- 大于4次    AND trade_total &lt;![CDATA[ &gt; ]]&gt; 4&lt;/if&gt;&lt;if test=&quot;quantity != null and quantity == 99&quot;&gt;    -- 消费总数    AND trade_total &lt;![CDATA[&lt;&gt;]]&gt; 0&lt;/if&gt;&lt;if test=&quot;quantity != null and quantity != 99 and quantity != 5&quot;&gt;    -- 0-4次    AND trade_total = #{quantity}&lt;/if&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 坑与填坑 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> PageHelp </tag>
+            
+            <tag> count </tag>
+            
+            <tag> order by </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot文件上传提示临时文件夹不存在</title>
+      <link href="undefinedpassages/springboot%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%8F%90%E7%A4%BA%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8D%E5%AD%98%E5%9C%A8/"/>
+      <url>passages/springboot%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%8F%90%E7%A4%BA%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8D%E5%AD%98%E5%9C%A8/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一-异常信息："><a href="#一-异常信息：" class="headerlink" title="一 异常信息："></a>一 异常信息：</h2><pre><code class="log">java.io.IOException: The temporary upload location [/tmp/tomcat.1747198308043109686.8887/work/Tomcat/localhost/ROOT] is not valid</code></pre><h2 id="二-原因："><a href="#二-原因：" class="headerlink" title="二 原因："></a>二 原因：</h2><p>在Linux 系统中，SpringBoot 应用服务在启动（java -jar 命令启动服务）的时候，会在操作系统的/tmp目录下生成一个tomcat*的文件目录，上传的文件先要转换成临时文件保存在这个文件夹下面。由于临时/tmp目录下的文件，在长时间（10天）没有使用的情况下，就会被系统机制自动删除掉。所以如果系统长时间无人问津的话，就可能导致上面这个问题。</p><h2 id="三-解决方法："><a href="#三-解决方法：" class="headerlink" title="三 解决方法："></a>三 解决方法：</h2><h3 id="1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。"><a href="#1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。" class="headerlink" title="1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。"></a>1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。</h3><h3 id="2：在配置文件中配置tomcat的临时目录，自定义baseDir。"><a href="#2：在配置文件中配置tomcat的临时目录，自定义baseDir。" class="headerlink" title="2：在配置文件中配置tomcat的临时目录，自定义baseDir。"></a>2：在配置文件中配置tomcat的临时目录，自定义baseDir。</h3><h4 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h4><pre><code class="Properties">server.tomcat.basedir=/tmp/tomcat</code></pre><h4 id="YAML"><a href="#YAML" class="headerlink" title="YAML"></a>YAML</h4><pre><code class="YAML">server:    tomcat:        basedir: /tmp/tomcat</code></pre><h3 id="3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。"><a href="#3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。" class="headerlink" title="3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。"></a>3：注入bean，手动配置临时目录，建议有项目组统一配置，便于管理和错误定位。</h3><pre><code class="java">/** * 文件上传临时路径 */@Bean  MultipartConfigElement multipartConfigElement() {    MultipartConfigFactory factory = new MultipartConfigFactory();    factory.setLocation(&quot;/tmp/tomcat&quot;);    return factory.createMultipartConfig();  }</code></pre><p>个人建议还是用第二种,在项目启动时,生成该文件,一劳永逸,杜绝后患</p><hr><p>作者：陈豆粒<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/qq_28643817/article/details/86715013" target="_blank" rel="noopener">https://blog.csdn.net/qq_28643817/article/details/86715013</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 坑与填坑 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> springboot </tag>
+            
+            <tag> 文件上传 </tag>
+            
+            <tag> 临时文件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java运行es6js代码报错</title>
+      <link href="undefinedpassages/java%E8%BF%90%E8%A1%8Ces6js%E4%BB%A3%E7%A0%81/"/>
+      <url>passages/java%E8%BF%90%E8%A1%8Ces6js%E4%BB%A3%E7%A0%81/</url>
+      
+        <content type="html"><![CDATA[<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code class="java">ScriptEngine engine = new NashornScriptEngineFactory().getScriptEngine(&quot;--language=es6&quot;);</code></pre><a id="more"></a><h2 id="运行es6js代码报错"><a href="#运行es6js代码报错" class="headerlink" title="运行es6js代码报错"></a>运行es6js代码报错</h2><pre><code class="java">            // 获取脚本引擎            ScriptEngineManager scriptEngineManager = new ScriptEngineManager();            ScriptEngine nashorn = scriptEngineManager.getEngineByName(&quot;nashorn&quot;);            try {                // 读取js文件内容                nashorn.eval(new FileReader(&quot;D:/05.js&quot;));                //调用js代码                Object eval = nashorn.eval(&quot;GetData()&quot;);                System.out.println(eval);            } catch (Exception e) {                e.printStackTrace();            }        }</code></pre><p>代码报异常</p><pre><code>Expected an operand but found let</code></pre><p>不支持let关键字</p><h2 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code class="java">            ScriptEngine engine = new NashornScriptEngineFactory().getScriptEngine(&quot;--language=es6&quot;);            try {                // 读取js文件内容                engine.eval(new FileReader(&quot;D:/05.js&quot;));                //调用js代码，进行参数加密                Object eval = engine.eval(&quot;GetData()&quot;);                System.out.println(eval);            } catch (Exception e) {                e.printStackTrace();            }</code></pre><p>有let关键字的js可以正常输出，但是Nashorn只支持部分es6，还是不支持class关键字。<br>Oracle又宣布弃用Nashorn JavaScript引擎。目前看来没有好的解决方法了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 坑与填坑 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> js </tag>
+            
+            <tag> es </tag>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
