@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content>
+    <meta name="author" content="lazycat">
+    <meta name="keywords" content>
+    <title>16个有用的Java工具类 ~ lazycat&#39;s blog</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/">&nbsp;<strong>lazycat&#39;s blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/categories/">Categories</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/tags/">Tags</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+            
+                <li class="nav-item" id="search-btn">
+                    <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+                </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>Thursday, September 12th 2019, 1:47 am</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <p>在 Java 中，工具类定义了一组公共方法，这篇文章将介绍 Java 中使用最频繁及最通用的 Java 工具类。以下工具类、方法按使用流行度排名，参考数据来源于 Github 上随机选取的 5 万个开源项目源码。</p>
+<h2 id="一-org-apache-commons-io-IOUtils"><a href="#一-org-apache-commons-io-IOUtils" class="headerlink" title="一. org.apache.commons.io.IOUtils"></a>一. org.apache.commons.io.IOUtils</h2><pre><code>closeQuietly：关闭一个IO流、socket、或者selector且不抛出异常，通常放在finally块
+toString：转换IO流、 Uri、 byte[]为String
+copy：IO流数据复制，从输入流写到输出流中，最大支持2GB
+toByteArray：从输入流、URI获取byte[]
+write：把字节. 字符等写入输出流
+toInputStream：把字符转换为输入流
+readLines：从输入流中读取多行数据，返回List&lt;String&gt;
+copyLarge：同copy，支持2GB以上数据的复制
+lineIterator：从输入流返回一个迭代器，根据参数要求读取的数据量，全部读取，如果数据不够，则失败</code></pre><h2 id="二-org-apache-commons-io-FileUtils"><a href="#二-org-apache-commons-io-FileUtils" class="headerlink" title="二. org.apache.commons.io.FileUtils"></a>二. org.apache.commons.io.FileUtils</h2><pre><code>deleteDirectory：删除文件夹
+readFileToString：以字符形式读取文件内容
+deleteQueitly：删除文件或文件夹且不会抛出异常
+copyFile：复制文件
+writeStringToFile：把字符写到目标文件，如果文件不存在，则创建
+forceMkdir：强制创建文件夹，如果该文件夹父级目录不存在，则创建父级
+write：把字符写到指定文件中
+listFiles：列举某个目录下的文件(根据过滤器)
+copyDirectory：复制文件夹
+forceDelete：强制删除文件</code></pre><h2 id="三-org-apache-commons-lang-StringUtils"><a href="#三-org-apache-commons-lang-StringUtils" class="headerlink" title="三. org.apache.commons.lang.StringUtils"></a>三. org.apache.commons.lang.StringUtils</h2><pre><code>isBlank：字符串是否为空 (trim后判断)
+isEmpty：字符串是否为空 (不trim并判断)
+equals：字符串是否相等
+join：合并数组为单一字符串，可传分隔符
+split：分割字符串
+EMPTY：返回空字符串
+trimToNull：trim后为空字符串则转换为null
+replace：替换字符串</code></pre><h2 id="四-org-apache-http-util-EntityUtils"><a href="#四-org-apache-http-util-EntityUtils" class="headerlink" title="四. org.apache.http.util.EntityUtils"></a>四. org.apache.http.util.EntityUtils</h2><pre><code>toString：把Entity转换为字符串
+consume：确保Entity中的内容全部被消费。可以看到源码里又一次消费了Entity的内容，假如用户没有消费，那调用Entity时候将会把它消费掉
+toByteArray：把Entity转换为字节流
+consumeQuietly：和consume一样，但不抛异常
+getContentCharset：获取内容的编码</code></pre><h2 id="五-org-apache-commons-lang3-StringUtils"><a href="#五-org-apache-commons-lang3-StringUtils" class="headerlink" title="五. org.apache.commons.lang3.StringUtils"></a>五. org.apache.commons.lang3.StringUtils</h2><pre><code>isBlank：字符串是否为空 (trim后判断)
+isEmpty：字符串是否为空 (不trim并判断)
+equals：字符串是否相等
+join：合并数组为单一字符串，可传分隔符
+split：分割字符串
+EMPTY：返回空字符串
+replace：替换字符串
+capitalize：首字符大写</code></pre><h2 id="六-org-apache-commons-io-FilenameUtils"><a href="#六-org-apache-commons-io-FilenameUtils" class="headerlink" title="六. org.apache.commons.io.FilenameUtils"></a>六. org.apache.commons.io.FilenameUtils</h2><pre><code>getExtension：返回文件后缀名
+getBaseName：返回文件名，不包含后缀名
+getName：返回文件全名
+concat：按命令行风格组合文件路径(详见方法注释)
+removeExtension：删除后缀名
+normalize：使路径正常化
+wildcardMatch：匹配通配符
+seperatorToUnix：路径分隔符改成unix系统格式的，即/
+getFullPath：获取文件路径，不包括文件名
+isExtension：检查文件后缀名是不是传入参数(List&lt;String&gt;)中的一个</code></pre><h2 id="七-org-springframework-util-StringUtils"><a href="#七-org-springframework-util-StringUtils" class="headerlink" title="七. org.springframework.util.StringUtils"></a>七. org.springframework.util.StringUtils</h2><pre><code>hasText：检查字符串中是否包含文本
+hasLength：检测字符串是否长度大于0
+isEmpty：检测字符串是否为空（若传入为对象，则判断对象是否为null）
+commaDelimitedStringToArray：逗号分隔的String转换为数组
+collectionToDelimitedString：把集合转为CSV格式字符串
+replace 替换字符串
+7. delimitedListToStringArray：相当于split
+uncapitalize：首字母小写
+collectionToDelimitedCommaString：把集合转为CSV格式字符串
+tokenizeToStringArray：和split基本一样，但能自动去掉空白的单词</code></pre><h2 id="八-org-apache-commons-lang-ArrayUtils"><a href="#八-org-apache-commons-lang-ArrayUtils" class="headerlink" title="八. org.apache.commons.lang.ArrayUtils"></a>八. org.apache.commons.lang.ArrayUtils</h2><pre><code>contains：是否包含某字符串
+addAll：添加整个数组
+clone：克隆一个数组
+isEmpty：是否空数组
+add：向数组添加元素
+subarray：截取数组
+indexOf：查找某个元素的下标
+isEquals：比较数组是否相等
+toObject：基础类型数据数组转换为对应的Object数组</code></pre><h2 id="九-org-apache-commons-lang-StringEscapeUtils"><a href="#九-org-apache-commons-lang-StringEscapeUtils" class="headerlink" title="九. org.apache.commons.lang.StringEscapeUtils"></a>九. org.apache.commons.lang.StringEscapeUtils</h2><pre><code>参考十五：org.apache.commons.lang3.StringEscapeUtils</code></pre><h2 id="十-org-apache-http-client-utils-URLEncodedUtils"><a href="#十-org-apache-http-client-utils-URLEncodedUtils" class="headerlink" title="十. org.apache.http.client.utils.URLEncodedUtils"></a>十. org.apache.http.client.utils.URLEncodedUtils</h2><pre><code>format：格式化参数，返回一个HTTP POST或者HTTP PUT可用application/x-www-form-urlencoded字符串
+parse：把String或者URI等转换为List&lt;NameValuePair&gt;</code></pre><h2 id="十一-org-apache-commons-codec-digest-DigestUtils"><a href="#十一-org-apache-commons-codec-digest-DigestUtils" class="headerlink" title="十一. org.apache.commons.codec.digest.DigestUtils"></a>十一. org.apache.commons.codec.digest.DigestUtils</h2><pre><code>md5Hex：MD5加密，返回32位字符串
+sha1Hex：SHA-1加密
+sha256Hex：SHA-256加密
+sha512Hex：SHA-512加密
+md5：MD5加密，返回16位字符串</code></pre><h2 id="十二-org-apache-commons-collections-CollectionUtils"><a href="#十二-org-apache-commons-collections-CollectionUtils" class="headerlink" title="十二. org.apache.commons.collections.CollectionUtils"></a>十二. org.apache.commons.collections.CollectionUtils</h2><pre><code>isEmpty：是否为空
+select：根据条件筛选集合元素
+transform：根据指定方法处理集合元素，类似List的map()
+filter：过滤元素，雷瑟List的filter()
+find：基本和select一样
+collect：和transform 差不多一样，但是返回新数组
+forAllDo：调用每个元素的指定方法
+isEqualCollection：判断两个集合是否一致</code></pre><h2 id="十三-org-apache-commons-lang3-ArrayUtils"><a href="#十三-org-apache-commons-lang3-ArrayUtils" class="headerlink" title="十三. org.apache.commons.lang3.ArrayUtils"></a>十三. org.apache.commons.lang3.ArrayUtils</h2><pre><code>contains：是否包含某个字符串
+addAll：添加整个数组
+clone：克隆一个数组
+isEmpty：是否空数组
+add：向数组添加元素
+subarray：截取数组
+indexOf：查找某个元素的下标
+isEquals：比较数组是否相等
+toObject：基础类型数据数组转换为对应的Object数组</code></pre><h2 id="十四-org-apache-commons-beanutils-PropertyUtils"><a href="#十四-org-apache-commons-beanutils-PropertyUtils" class="headerlink" title="十四. org.apache.commons.beanutils.PropertyUtils"></a>十四. org.apache.commons.beanutils.PropertyUtils</h2><pre><code>getProperty：获取对象属性值
+setProperty：设置对象属性值
+getPropertyDiscriptor：获取属性描述器
+isReadable：检查属性是否可访问
+copyProperties：复制属性值，从一个对象到另一个对象
+getPropertyDiscriptors：获取所有属性描述器
+isWriteable：检查属性是否可写
+getPropertyType：获取对象属性类型</code></pre><h2 id="十五-org-apache-commons-lang3-StringEscapeUtils"><a href="#十五-org-apache-commons-lang3-StringEscapeUtils" class="headerlink" title="十五. org.apache.commons.lang3.StringEscapeUtils"></a>十五. org.apache.commons.lang3.StringEscapeUtils</h2><pre><code>unescapeHtml4：转义html
+escapeHtml4：反转义html
+escapeXml：转义xml
+unescapeXml：反转义xml
+escapeJava：转义unicode编码
+escapeEcmaScript：转义EcmaScript字符
+unescapeJava：反转义unicode编码
+escapeJson：转义json字符
+escapeXml10：转义Xml10</code></pre><p>这个现在已经废弃了，建议使用 commons-text 包里面的方法。</p>
+<h2 id="十六-org-apache-commons-beanutils-BeanUtils"><a href="#十六-org-apache-commons-beanutils-BeanUtils" class="headerlink" title="十六. org.apache.commons.beanutils.BeanUtils"></a>十六. org.apache.commons.beanutils.BeanUtils</h2><pre><code>copyPeoperties：复制属性值，从一个对象到另一个对象
+getProperty：获取对象属性值
+setProperty：设置对象属性值
+populate：根据Map给属性复制
+copyPeoperty：复制单个值，从一个对象到另一个对象
+cloneBean：克隆bean实例</code></pre><p>现在你只要了解了以上 16 种最流行的工具类方法，你就不必要再自己写工具类了，不必重复造轮子。大部分工具类方法通过其名字就能明白其用途，如果不清楚的，可以看下别人是怎么用的，或者去网上查询其用法。</p>
+<p>另外，工具类，根据阿里开发手册，包名如果要使用 util 不能带 s，工具类命名为<code>XxxUtils</code></p>
+<blockquote>
+<p>作者：alterem<br>链接：<a href="https://juejin.im/post/5d4a25b351882505c105cc6e" target="_blank" rel="noopener">https://juejin.im/post/5d4a25b351882505c105cc6e</a><br>来源：掘金</p>
+</blockquote>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+
+    
+</main>
+
+
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="None" data-success="success" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "16个有用的Java工具类&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: false,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      var el = "h1,h2,h3,h4,h5,h6".split(",")
+      var res = []
+      for (item of el) {
+        res.push(".markdown-body > " + item)
+      }
+      anchors.add(res.join(", "))
+    </script>
+  
+
+  
+    <script src="/js/local-search.js"></script>
+    <script>
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function(){ getSearchFile(path); this.onclick = null }
+    </script>
+  
+</body>
+</html>
