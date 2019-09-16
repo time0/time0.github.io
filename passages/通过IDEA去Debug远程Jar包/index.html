@@ -111,7 +111,10 @@
 <blockquote>
 <p>首先，以以下方式来启动 Jar 包</p>
 </blockquote>
-<pre><code>java -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y -jar test.jar</code></pre><p>启动之后，你会发现，有如下提示：</p>
+<p>Windows启动命令</p>
+<pre><code>java -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y -jar test.jar</code></pre><p>Linux启动命令</p>
+<pre><code class="bash">nohup java -Djavax.net.debug=ssl -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8080 -jar test.jar &gt;/dev/null 2&gt;&amp;1&amp;</code></pre>
+<p>启动之后，你会发现，有如下提示：</p>
 <pre><code>Listening for transport dt_socket at address: 5005</code></pre><p>这个时候，就卡在这不动了，然后我们进行下面这步：</p>
 <blockquote>
 <p>配置 IDEA，按如下配置</p>
