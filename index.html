@@ -151,7 +151,7 @@ lineIterator：从输入流返回一个迭代器，根据参数要求读取的�
 
 Windows启动命令
 java -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y,suspend=y -jar test.jarLinux启动命令
-nohup java -Djavax.net.debug=ssl -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8080 -jar test.jar &gt;/dev/null 2&gt;&amp;1&amp;
+nohup java -Djavax.net.debug=ssl -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -jar test.jar &gt;/dev/null 2&gt;&amp;1&amp;
 启动之后，你会发现，有如下提示：
 Listening for transport dt_socket at address: 5005这个时候，就卡在这不动了，然后我</div>
                     
