@@ -1,110 +1,125 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 
 
 
 
 
 <head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content>
-    <meta name="author" content="lazycat">
-    <meta name="keywords" content>
-    <title>Docker环境下搭建Jenkins ~ lazycat&#39;s blog</title>
-    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
-    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
-    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
-    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
-    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
-    
-        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
-    
-    <link rel="stylesheet" href="/css/main.css">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content>
+  <meta name="author" content="lazycat">
+  <meta name="keywords" content>
+  <title>Docker环境下搭建Jenkins ~ lazycat&#39;s blog</title>
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css">
+  <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+  
+    <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+  
+  <link rel="stylesheet" href="/css/main.css">
 
-    
+  
 </head>
 
 
 <body>
-<header style="height: 70vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-<div class="container">
+  <div class="container">
     <a class="navbar-brand" href="/">&nbsp;<strong>lazycat&#39;s blog</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <div class="animated-icon"><span></span><span></span><span></span></div>
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto text-center">
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/archives/">Archives</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/categories/">Categories</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/tags/">Tags</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/about/">About</a>
-            </li>
-            
-            
-                <li class="nav-item" id="search-btn">
-                    <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-                </li>
-            
-        </ul>
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
+  </div>
 
 
 </nav>
-    <div class="view intro-2"
-         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
-        <div class="full-bg-img">
-            <div class="mask rgba-black-light flex-center">
-                <div class="container text-center white-text wow fadeInUp">
-                    <span class="h2" id="subtitle">
-                        
-                    </span>
-                    
-                        <br>
-                        <p>Wednesday, August 7th 2019, 5:27 pm</p>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 
-<main>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              <p>Wednesday, August 7th 2019, 5:27 pm</p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
     
-        
+      
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="d-none d-lg-block col-lg-2"></div>
-            <div class="col-lg-8 nopadding-md">
-                <div class="py-5 z-depth-3 board">
-                    <div class="post-content mx-auto">
-                        <div class="markdown-body">
-                            <blockquote>
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto">
+          <div class="markdown-body">
+            <blockquote>
 <p>原文地址 <a href="https://www.jianshu.com/p/0391e225e4a6" target="_blank" rel="noopener">https://www.jianshu.com/p/0391e225e4a6</a></p>
 </blockquote>
 <h3 id="一-什么是-Jenkins"><a href="#一-什么是-Jenkins" class="headerlink" title="一. 什么是 Jenkins"></a>一. 什么是 Jenkins</h3><p>Jenkins 是当前非常流行的一款持续集成工具，可以帮助大家把更新后的代码自动部署到服务器上运行。</p>
@@ -117,18 +132,18 @@
 <p>本人之前也是使用 yum 安装的方式安装<code>Jenkins的</code>，不过自动用上<code>docker</code>后，就再也没那样安装过。不得不说直接使用<code>docker</code>镜像真是简单除暴无脑。</p>
 <h3 id="三-准备工作"><a href="#三-准备工作" class="headerlink" title="三. 准备工作"></a>三. 准备工作</h3><p>要使用 docker 镜像，首先你得先安装 docker。对 docker 不熟悉的朋友可以参考我之前写的一篇 <a href="https://www.jianshu.com/p/d95c52d5ec3f" target="_blank" rel="noopener">docker 安装和简单使用</a>的教程。</p>
 <h3 id="四-寻找官方镜像"><a href="#四-寻找官方镜像" class="headerlink" title="四. 寻找官方镜像"></a>四. 寻找官方镜像</h3><p>我们可以到 <a href="https://jenkins.io/download/" target="_blank" rel="noopener">Jenkins 官网</a>上寻找 docker 镜像地址。  </p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-400da32a91e389ea.png" alt> Jenkins 官网</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-400da32a91e389ea.png" srcset="/img/loading.gif" alt> Jenkins 官网</p>
 <p>点击 docker 按钮，自动跳转到 dockerhub，在这里可以找到下载命令</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-ecec0ece94503c57.png" alt> Docker Hub 网站</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-ecec0ece94503c57.png" srcset="/img/loading.gif" alt> Docker Hub 网站</p>
 <h3 id="五-启动-Jenkins"><a href="#五-启动-Jenkins" class="headerlink" title="五. 启动 Jenkins"></a>五. 启动 Jenkins</h3><p>找到了官方镜像后，我们就可以开始安装了。进入安装好了 docker 的 linux 服务器，这里我们以<a href="https://www.jianshu.com/p/d95c52d5ec3f" target="_blank" rel="noopener">之前教程</a>介绍的阿里云 centos7.3 环境为例。</p>
 <p>输入命令，下载<code>Jenkins</code>官方镜像到服务器上。</p>
 <pre><code>docker pull jenkins/jenkins
 
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-17b53e7ce76c8dd3.png" alt> 下载镜像</p>
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-17b53e7ce76c8dd3.png" srcset="/img/loading.gif" alt> 下载镜像</p>
 <p>耐心等待下载完成，输入命令查看下载完成的镜像</p>
 <pre><code>docker images
 
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-61fc8a41c35e1d03.png" alt> 镜像下载完成</p>
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-61fc8a41c35e1d03.png" srcset="/img/loading.gif" alt> 镜像下载完成</p>
 <p>镜像下载完成，下面就要开始启动容器了。启动容器前，建议大家仔细阅读前面寻找镜像时 <a href="https://hub.docker.com/_/jenkins/" target="_blank" rel="noopener">Docker Hub 上关于 jenkins 镜像的详细说明</a>。</p>
 <p>在镜像文档里，我们知道<code>Jenkins</code>访问的端口号是<code>8080</code>，另外还需要暴露一个<code>tcp</code>的端口号<code>50000</code>。我们使用如下命令启动<code>Jenkins</code>镜像。</p>
 <pre><code>docker run -d -p 80:8080 -p 50000:50000 -v jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins docker.io/jenkins/jenkins
@@ -143,28 +158,28 @@
 <li><code>--name jenkins</code> 给容器起一个别名</li>
 </ul>
 <p>启动后输入命令<code>docker ps -a</code>查看所有容器，可以看到<code>jenkins</code>已成功启动。  </p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-75bf205f6f84a350.png" alt> 启动成功</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-75bf205f6f84a350.png" srcset="/img/loading.gif" alt> 启动成功</p>
 <h3 id="六-配置-Jenkins"><a href="#六-配置-Jenkins" class="headerlink" title="六. 配置 Jenkins"></a>六. 配置 Jenkins</h3><p>在浏览器输入<code>http://ip</code>进入 Jenkins 登录页面。页面会提示你到服务器的指定位置获取初始化密码。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f45436a8b038b0cf.png" alt> 输入启动密码</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f45436a8b038b0cf.png" srcset="/img/loading.gif" alt> 输入启动密码</p>
 <p>注意，因为我们是<code>docker</code>版的<code>jenkins</code>，所以这个路径不是服务器的路径，而是容器内的路径。我们可以通过如下命令从容器中获取到初始化密码。</p>
 <pre><code>docker exec jenkins tail /var/jenkins_home/secrets/initialAdminPassword
 
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-350c6e359aef0ee5.png" alt> image.png</p>
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-350c6e359aef0ee5.png" srcset="/img/loading.gif" alt> image.png</p>
 <p>在页面输入密码，点击<code>Continue</code>，进入插件安装页面。我们点击左边的<code>Install suggested plugins</code>，安装推荐插件就好。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-0b8545b3697b9c1a.png" alt> image.png</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-0b8545b3697b9c1a.png" srcset="/img/loading.gif" alt> image.png</p>
 <p>耐心等待安装完成</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f3828123fe5b7536.png" alt> image.png</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f3828123fe5b7536.png" srcset="/img/loading.gif" alt> image.png</p>
 <p>安装好插件后，系统会提示建立管理员账户。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-1893b83894e8b9ec.png" alt> image.png</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-1893b83894e8b9ec.png" srcset="/img/loading.gif" alt> image.png</p>
 <p>创建管理员账户后进入系统，我们先来配置常用工具。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-effde9a62339b43a.png" alt> 工具配置</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-effde9a62339b43a.png" srcset="/img/loading.gif" alt> 工具配置</p>
 <p>进入工具配置页，首先看到的就是 jdk 配置，这里我们先使用自动安装的<code>java8</code>。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-055bb606220cfaf6.png" alt> jdk 自动安装</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-055bb606220cfaf6.png" srcset="/img/loading.gif" alt> jdk 自动安装</p>
 <p>注意，自动安装<code>jdk</code>需要你填入<code>oracle</code>的账号密码，这样<code>Jenkins</code>才能自动帮你到<code>oracle</code>安装。如果没有<code>oracle</code>账号，建议先去 <a href="https://www.oracle.com/" target="_blank" rel="noopener">Oracle 官网</a>注册一下。</p>
 <p>配置好<code>jdk</code>自动安装后，我们继续配置<code>git</code>。<code>git</code>的字段安装更简单，起个别名，勾上<code>自动安装</code>。  </p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f4c50a1c1517d06d.png" alt> git 自动安装</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-f4c50a1c1517d06d.png" srcset="/img/loading.gif" alt> git 自动安装</p>
 <p>配置好 git 我们继续配置<code>Gradle</code>，一样简单，起个别名，勾上<code>自动安装</code>，选择<code>Gradle</code>的版本。  </p>
-<p><img src="http://upload-images.jianshu.io/upload_images/4399845-357c51198e17e4bb.png" alt> gradle 自动安装</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4399845-357c51198e17e4bb.png" srcset="/img/loading.gif" alt> gradle 自动安装</p>
 <p>至此，jenkins 就安装配置完成了。关于具体如何使用 jenkins 进行自动发布，可以参考本人另一篇文章 <a href="https://www.jianshu.com/p/eb3cbb34be97" target="_blank" rel="noopener">linux 服务器中 Jenkins 集成 git、Gradle 持续构建 Springboot 项目</a>。</p>
 <h3 id="七-生成-SSHKey"><a href="#七-生成-SSHKey" class="headerlink" title="七. 生成 SSHKey"></a>七. 生成 SSHKey</h3><p>这里再补充一章说明如何生成 SSHKey。容器从 github 上面下载代码的时候需要用到。因为咱们这个 Jenkins 是基于 docker 的，不是直接安装在服务器上，这里有很大的不同。</p>
 <p>要生成容器的 SSHKey，首先要先进入容器</p>
@@ -173,45 +188,45 @@
 </code></pre><p>进入容器后生成 sshkey</p>
 <pre><code>ssh-keygen -t rsa -C &quot;123@qq.com&quot;
 
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-e8bb06e4caa042ad.png" alt> 生成 sshkey</p>
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-e8bb06e4caa042ad.png" srcset="/img/loading.gif" alt> 生成 sshkey</p>
 <p>在容器内输入<code>exit</code>离开容器，使用如下命令获取公钥</p>
 <pre><code>tail /var/lib/docker/volumes/jenkins/_data/.ssh/id_rsa.pub
 
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-ce7e9ffa81988321.png" alt> 获取 SSHKey 公钥</p>
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4399845-ce7e9ffa81988321.png" srcset="/img/loading.gif" alt> 获取 SSHKey 公钥</p>
 
-                            <hr>
-                        </div>
-                        <br>
-                        <div>
-                            
-                                <p>
-                                    <i class="iconfont icon-inbox"></i>
-                                    
-                                        <a class="hover-with-bg" href="/categories/%E6%96%87%E6%A1%A3">文档</a>
-                                        &nbsp;
-                                    
-                                </p>
-                            
-                            <p>
-                                <i class="iconfont icon-tag"></i>
-                                
-                            </p>
-                            
-                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <div class="d-none d-lg-block col-lg-2 toc-container">
+            <hr>
+          </div>
+          <br>
+          <div>
             
+              <p>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/%E6%96%87%E6%A1%A3">文档</a>
+                  &nbsp;
+                
+              </p>
+            
+            <p>
+              <i class="iconfont icon-tag"></i>
+              
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
   <div id="toc">
-    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
     <div id="tocbot"></div>
   </div>
 
-        </div>
     </div>
+  </div>
 </div>
 
 <!-- custom -->
@@ -219,15 +234,21 @@
 
 <!-- Comments -->
 <div class="col-lg-7 mx-auto nopadding-md">
-    <div class="container comments mx-auto" id="comments">
-        
-    </div>
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
 </div>
 
     
-</main>
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
+  
     <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -240,87 +261,96 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="None" data-success="success" for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+  
 
-
-<footer class="mt-5">
+  <footer class="mt-5">
   <div class="text-center py-3">
     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
     <br>
     
   </div>
 </footer>
 
-  <!-- SCRIPTS -->
-  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
-  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
-  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
-  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
-  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
-  <script src="/js/main.js"></script>
-  
-    
-      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
-    
-    <script src="/js/post.js"></script>
-  
-  
-    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
-    <script>
-      $(document).ready(function(){
-        $('pre').addClass('prettyprint linenums');
-        prettyPrint();
-      })
-    </script>
-  
-  
-    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
-    <script>
-        var typed = new Typed('#subtitle', {
-          strings: [
-            '  ',
-            "Docker环境下搭建Jenkins&nbsp;",
-        ],
-        cursorChar: "_",
-        typeSpeed: 70,
-        startDelay: 300, //开始之前延迟300毫秒
-        loop: false,
-        });
-        $(".typed-cursor").addClass("h2");
-    </script>
-  
-  
-    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
-    <script>
-      anchors.options = {
-        placement: "right",
-        visible: "false",
-        
-      };
-      var el = "h1,h2,h3,h4,h5,h6".split(",")
-      var res = []
-      for (item of el) {
-        res.push(".markdown-body > " + item)
-      }
-      anchors.add(res.join(", "))
-    </script>
-  
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/popper/popper.min.js"></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js"></script>
+<script src="/js/main.js"></script>
+
+  <script src="/js/lazyload.js"></script>
+
 
   
-    <script src="/js/local-search.js"></script>
-    <script>
-      var path = "/local-search.xml";
-      var inputArea = document.querySelector("#local-search-input");
-      inputArea.onclick = function(){ getSearchFile(path); this.onclick = null }
-    </script>
+    <script src="/lib/tocbot/tocbot.min.js"></script>
   
+  <script src="/js/post.js"></script>
+
+
+  <script src="/lib/prettify/prettify.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+  <script src="/lib/typed/typed.min.js"></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Docker环境下搭建Jenkins&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+  <script src="/lib/anchor/anchor.min.js"></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
 </body>
 </html>

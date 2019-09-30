@@ -1,110 +1,125 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 
 
 
 
 
 <head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content>
-    <meta name="author" content="lazycat">
-    <meta name="keywords" content>
-    <title>springboot文件上传提示临时文件夹不存在 ~ lazycat&#39;s blog</title>
-    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
-    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
-    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
-    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
-    <link rel="stylesheet" href="/lib/nprogress/nprogress.css?v=0.2.0">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
-    
-        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
-    
-    <link rel="stylesheet" href="/css/main.css">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content>
+  <meta name="author" content="lazycat">
+  <meta name="keywords" content>
+  <title>springboot文件上传提示临时文件夹不存在 ~ lazycat&#39;s blog</title>
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css">
+  <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+  
+    <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+  
+  <link rel="stylesheet" href="/css/main.css">
 
-    
+  
 </head>
 
 
 <body>
-<header style="height: 70vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-<div class="container">
+  <div class="container">
     <a class="navbar-brand" href="/">&nbsp;<strong>lazycat&#39;s blog</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <div class="animated-icon"><span></span><span></span><span></span></div>
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto text-center">
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/archives/">Archives</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/categories/">Categories</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/tags/">Tags</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="/about/">About</a>
-            </li>
-            
-            
-                <li class="nav-item" id="search-btn">
-                    <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
-                </li>
-            
-        </ul>
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
+  </div>
 
 
 </nav>
-    <div class="view intro-2"
-         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
-        <div class="full-bg-img">
-            <div class="mask rgba-black-light flex-center">
-                <div class="container text-center white-text wow fadeInUp">
-                    <span class="h2" id="subtitle">
-                        
-                    </span>
-                    
-                        <br>
-                        <p>Monday, July 8th 2019, 3:58 pm</p>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 
-<main>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              <p>Monday, July 8th 2019, 3:58 pm</p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
     
-        
+      
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="d-none d-lg-block col-lg-2"></div>
-            <div class="col-lg-8 nopadding-md">
-                <div class="py-5 z-depth-3 board">
-                    <div class="post-content mx-auto">
-                        <div class="markdown-body">
-                            <h2 id="一-异常信息："><a href="#一-异常信息：" class="headerlink" title="一 异常信息："></a>一 异常信息：</h2><pre><code class="log">java.io.IOException: The temporary upload location [/tmp/tomcat.1747198308043109686.8887/work/Tomcat/localhost/ROOT] is not valid</code></pre>
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto">
+          <div class="markdown-body">
+            <h2 id="一-异常信息："><a href="#一-异常信息：" class="headerlink" title="一 异常信息："></a>一 异常信息：</h2><pre><code class="log">java.io.IOException: The temporary upload location [/tmp/tomcat.1747198308043109686.8887/work/Tomcat/localhost/ROOT] is not valid</code></pre>
 <h2 id="二-原因："><a href="#二-原因：" class="headerlink" title="二 原因："></a>二 原因：</h2><p>在Linux 系统中，SpringBoot 应用服务在启动（java -jar 命令启动服务）的时候，会在操作系统的/tmp目录下生成一个tomcat*的文件目录，上传的文件先要转换成临时文件保存在这个文件夹下面。由于临时/tmp目录下的文件，在长时间（10天）没有使用的情况下，就会被系统机制自动删除掉。所以如果系统长时间无人问津的话，就可能导致上面这个问题。</p>
 <h2 id="三-解决方法："><a href="#三-解决方法：" class="headerlink" title="三 解决方法："></a>三 解决方法：</h2><h3 id="1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。"><a href="#1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。" class="headerlink" title="1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。"></a>1：临时的，直接重新启动项目就行，会重新建立临时文件夹，不建议在生产环境使用。</h3><h3 id="2：在配置文件中配置tomcat的临时目录，自定义baseDir。"><a href="#2：在配置文件中配置tomcat的临时目录，自定义baseDir。" class="headerlink" title="2：在配置文件中配置tomcat的临时目录，自定义baseDir。"></a>2：在配置文件中配置tomcat的临时目录，自定义baseDir。</h3><h4 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h4><pre><code class="Properties">server.tomcat.basedir=/tmp/tomcat</code></pre>
 <h4 id="YAML"><a href="#YAML" class="headerlink" title="YAML"></a>YAML</h4><pre><code class="YAML">server:
@@ -123,45 +138,45 @@
 <hr>
 <p>作者：陈豆粒<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/qq_28643817/article/details/86715013" target="_blank" rel="noopener">https://blog.csdn.net/qq_28643817/article/details/86715013</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
 
-                            <hr>
-                        </div>
-                        <br>
-                        <div>
-                            
-                                <p>
-                                    <i class="iconfont icon-inbox"></i>
-                                    
-                                        <a class="hover-with-bg" href="/categories/%E5%9D%91%E4%B8%8E%E5%A1%AB%E5%9D%91">坑与填坑</a>
-                                        &nbsp;
-                                    
-                                </p>
-                            
-                            <p>
-                                <i class="iconfont icon-tag"></i>
-                                
-                                    <a class="hover-with-bg" href="/tags/springboot">springboot</a>
-                                
-                                    <a class="hover-with-bg" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
-                                
-                                    <a class="hover-with-bg" href="/tags/%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6">临时文件</a>
-                                
-                            </p>
-                            
-                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <div class="d-none d-lg-block col-lg-2 toc-container">
+            <hr>
+          </div>
+          <br>
+          <div>
             
+              <p>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/%E5%9D%91%E4%B8%8E%E5%A1%AB%E5%9D%91">坑与填坑</a>
+                  &nbsp;
+                
+              </p>
+            
+            <p>
+              <i class="iconfont icon-tag"></i>
+              
+                <a class="hover-with-bg" href="/tags/springboot">springboot</a>
+              
+                <a class="hover-with-bg" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
+              
+                <a class="hover-with-bg" href="/tags/%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6">临时文件</a>
+              
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
   <div id="toc">
-    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
     <div id="tocbot"></div>
   </div>
 
-        </div>
     </div>
+  </div>
 </div>
 
 <!-- custom -->
@@ -169,15 +184,21 @@
 
 <!-- Comments -->
 <div class="col-lg-7 mx-auto nopadding-md">
-    <div class="container comments mx-auto" id="comments">
-        
-    </div>
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
 </div>
 
     
-</main>
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
+  
     <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -190,87 +211,96 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="None" data-success="success" for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+  
 
-
-<footer class="mt-5">
+  <footer class="mt-5">
   <div class="text-center py-3">
     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
     <br>
     
   </div>
 </footer>
 
-  <!-- SCRIPTS -->
-  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
-  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
-  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
-  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
-  <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
-  <script src="/js/main.js"></script>
-  
-    
-      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
-    
-    <script src="/js/post.js"></script>
-  
-  
-    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
-    <script>
-      $(document).ready(function(){
-        $('pre').addClass('prettyprint linenums');
-        prettyPrint();
-      })
-    </script>
-  
-  
-    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
-    <script>
-        var typed = new Typed('#subtitle', {
-          strings: [
-            '  ',
-            "springboot文件上传提示临时文件夹不存在&nbsp;",
-        ],
-        cursorChar: "_",
-        typeSpeed: 70,
-        startDelay: 300, //开始之前延迟300毫秒
-        loop: false,
-        });
-        $(".typed-cursor").addClass("h2");
-    </script>
-  
-  
-    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
-    <script>
-      anchors.options = {
-        placement: "right",
-        visible: "false",
-        
-      };
-      var el = "h1,h2,h3,h4,h5,h6".split(",")
-      var res = []
-      for (item of el) {
-        res.push(".markdown-body > " + item)
-      }
-      anchors.add(res.join(", "))
-    </script>
-  
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/popper/popper.min.js"></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js"></script>
+<script src="/js/main.js"></script>
+
+  <script src="/js/lazyload.js"></script>
+
 
   
-    <script src="/js/local-search.js"></script>
-    <script>
-      var path = "/local-search.xml";
-      var inputArea = document.querySelector("#local-search-input");
-      inputArea.onclick = function(){ getSearchFile(path); this.onclick = null }
-    </script>
+    <script src="/lib/tocbot/tocbot.min.js"></script>
   
+  <script src="/js/post.js"></script>
+
+
+  <script src="/lib/prettify/prettify.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+  <script src="/lib/typed/typed.min.js"></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "springboot文件上传提示临时文件夹不存在&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+  <script src="/lib/anchor/anchor.min.js"></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js"></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
 </body>
 </html>
